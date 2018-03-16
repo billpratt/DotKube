@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="KubernetesClient" Version="0.4.0-beta" />
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.2.0-beta" />
+  </ItemGroup>
+
+</Project>
