@@ -50,7 +50,7 @@ namespace DotKube.Commands.Resources
                     getOutputList.Add(getPodOutput);
                 }
 
-                TableFormatter.Print(getOutputList, "No resources found", "   ", null, new Dictionary<string, Func<GetPodOutput, object>>
+                TableFormatter.Print(getOutputList, "No resources found", null, new Dictionary<string, Func<GetPodOutput, object>>
                 {
                             { "NAME", x => x.Name },
                             { "READY", x => x.Ready },

@@ -9,9 +9,9 @@ namespace DotKube
     {
         public static void Print<T>(IEnumerable<T> items, 
                                     string noItemsMessage, 
-                                    string columnPad, 
                                     char? headerBorder, 
                                     Dictionary<string, Func<T, object>> dictionary,
+                                    string columnPad = "   ", 
                                     bool noItemsShowHeader = false)
         {
             List<string>[] columns = new List<string>[dictionary.Count];

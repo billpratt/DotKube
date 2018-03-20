@@ -9,11 +9,28 @@ namespace DotKube
     {
         public static int Main(string[] args)
         {
-            var result = RunApp(args);
 #if DEBUG
-            Console.ReadLine();
-#endif        
-            return result;
+            while (true)
+            {
+                var input = Prompt.GetString("> ");
+                var inputSplit = input.Split(' ');
+
+                if(inputSplit[0] == "clear")
+                {
+                    Console.Clear();
+                    continue;
+                }
+                else if(inputSplit[0] == "exit")
+                {
+                    // Exit out
+                    return 0;
+                }
+
+                var result = RunApp(inputSplit);
+            }
+#else
+            return RunApp(args);
+#endif
         }
 
         static int RunApp(string[] args)
@@ -27,6 +44,8 @@ namespace DotKube
 
             app.HelpOption(inherited: true);
 
+            app.Option("--kubeconfig", "Path to the kubeconfig file to use for CLI requests.", CommandOptionType.SingleValue, true);
+
             app.Command("config", ConfigCommands.ConfigCmd);
             app.Command("get", GetCommands.GetCmd);
 
@@ -36,7 +55,15 @@ namespace DotKube
                 return 1;
             });
 
-            return app.Execute(args);
+            try
+            {
+                return app.Execute(args);
+            }
+            catch (Exception ex)
+            {
+                Reporter.Output.WriteLine(ex.Message);
+                return 1;
+            }
         }
     }
 }

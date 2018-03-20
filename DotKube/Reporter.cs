@@ -55,6 +55,11 @@ namespace DotKube
             }
         }
 
+        public void WriteError(string message)
+        {
+            WriteLine($"Error: {message}");
+        }
+
         public void WriteLine()
         {
             lock (_lock)

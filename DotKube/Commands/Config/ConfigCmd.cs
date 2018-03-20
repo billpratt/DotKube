@@ -6,10 +6,11 @@ using McMaster.Extensions.CommandLineUtils;
 namespace DotKube.Commands.Config
 {
     public partial class ConfigCommands
-    {
+    { 
         internal static void ConfigCmd(CommandLineApplication cmd)
         {
             cmd.Description = "Modify kubeconfig files";
+            
             cmd.OnExecute(() =>
             {
                 cmd.ShowHelp();
