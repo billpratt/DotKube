@@ -2,6 +2,7 @@
 using System;
 using DotKube.Commands.Config;
 using DotKube.Commands.Resources;
+using DotKube.Commands;
 
 namespace DotKube
 {
@@ -35,33 +36,13 @@ namespace DotKube
 
         static int RunApp(string[] args)
         {
-            var app = new CommandLineApplication
-            {
-                Name = "dotkube",
-                Description = "Kubectl written in .Net Core",
-                FullName = "Kubectl written in .Net Core"
-            };
-
-            app.HelpOption(inherited: true);
-
-            app.Option("--kubeconfig", "Path to the kubeconfig file to use for CLI requests.", CommandOptionType.SingleValue, true);
-
-            app.Command("config", ConfigCommands.ConfigCmd);
-            app.Command("get", GetCommands.GetCmd);
-
-            app.OnExecute(() =>
-            {
-                app.ShowHelp();
-                return 1;
-            });
-
             try
             {
-                return app.Execute(args);
+                return CommandLineApplication.Execute<DotKubeCommand>(args);
             }
             catch (Exception ex)
             {
-                Reporter.Output.WriteLine(ex.Message);
+                Reporter.Error.WriteLine(ex.Message);
                 return 1;
             }
         }

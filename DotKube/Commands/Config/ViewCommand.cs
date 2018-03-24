@@ -1,5 +1,4 @@
 ﻿using DotKube.Extensions;
-using DotKube.K8SClient;
 using k8s.KubeConfigModels;
 using McMaster.Extensions.CommandLineUtils;
 using Newtonsoft.Json.Linq;
@@ -10,45 +9,48 @@ using YamlDotNet.Serialization;
 
 namespace DotKube.Commands.Config
 {
-    public partial class ConfigCommands
+    [Command(Description = "Display merged kubeconfig settings or a specified kubeconfig file")]
+    public class ViewCommand : CommandBase
     {
-        internal static void ViewCmd(CommandLineApplication cmd)
+        private ConfigCommand Parent { get; set; }
+
+        // TODO: This should be true if --minify is passed without a value
+        [Option("--minify", "Remove all information not used by current-context from the output", CommandOptionType.SingleOrNoValue)]
+        public bool Minify { get; set; }
+
+        [Option("-o|--output", "Output format. One of: json|yaml", CommandOptionType.SingleValue)]
+        public string Output { get; set; }
+
+        protected override int OnExecute(CommandLineApplication app)
         {
-            cmd.Description = "Display merged kubeconfig settings or a specified kubeconfig file";
-
-            var minifyOption = cmd.Option("--minify", "Remove all information not used by current-context from the output", CommandOptionType.SingleOrNoValue);
-            var outputOption = cmd.Option("-o|--output", "Output format. One of: json|yaml", CommandOptionType.SingleValue);
-            cmd.OnExecute(() =>
+            var config = K8SClient.KubernetesClientConfiguration.GetStartingConfig();
+            
+            var configToShow = config;
+            if (Minify)
             {
-                var k8sConfig = K8SClient.KubernetesClientConfiguration.GetStartingConfig();
+                configToShow = MinifiedConfig(config);
+            }
 
-                var minify = minifyOption.GetBool();
-                var output = "yaml";
-                
-                var configToShow = k8sConfig;
-                if(minify)
-                {
-                    configToShow = MinifiedConfig(k8sConfig);
-                }
+            var output = "yaml";
+            if (!string.IsNullOrWhiteSpace(Output))
+            {
+                output = Output.ToLower();
+            }
 
-                if(outputOption.HasValue())
-                {
-                    output = outputOption.Value().ToLower();
-                }
+            // Redact sensitive data
+            RedactCertificateData(configToShow);
 
-                // Redact sensitive data
-                RedactCertificateData(configToShow);
-                
-                switch(output)
-                {
-                    case "json":
-                        PrintJson(configToShow);
-                        break;
-                    default:
-                        PrintYaml(configToShow);
-                        break;
-                }
-            });
+            switch (output)
+            {
+                case "json":
+                    PrintJson(configToShow);
+                    break;
+                default:
+                    PrintYaml(configToShow);
+                    break;
+            }
+
+            return 0;
         }
 
         private static K8SConfiguration MinifiedConfig(K8SConfiguration k8sConfig)
@@ -117,7 +119,5 @@ namespace DotKube.Commands.Config
 
             Reporter.Output.Write(output);
         }
-
-
     }
 }
