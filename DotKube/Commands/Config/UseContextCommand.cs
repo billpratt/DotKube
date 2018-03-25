@@ -33,7 +33,7 @@ namespace DotKube.Commands.Config
             }
 
             config.CurrentContext = ContextName;
-            K8SClient.KubernetesClientConfiguration.WriteKubeConfig(config);
+            K8SClient.KubernetesClientConfiguration.WriteKubeConfig(config, Parent.KubeConfigFilePath);
             
             Reporter.Output.WriteLine($"Switched to context \"{ContextName}\".");
 

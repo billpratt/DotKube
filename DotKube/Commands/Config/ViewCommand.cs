@@ -23,7 +23,7 @@ namespace DotKube.Commands.Config
 
         protected override int OnExecute(CommandLineApplication app)
         {
-            var config = K8SClient.KubernetesClientConfiguration.GetStartingConfig();
+            var config = Parent.GetK8SConfiguration();
             
             var configToShow = config;
             if (Minify)
