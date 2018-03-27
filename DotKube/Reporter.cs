@@ -60,6 +60,11 @@ namespace DotKube
             WriteLine($"Error: {message}");
         }
 
+        public void WriteWarning(string message)
+        {
+            WriteLine($"Warning: {message}");
+        }
+
         public void WriteLine()
         {
             lock (_lock)

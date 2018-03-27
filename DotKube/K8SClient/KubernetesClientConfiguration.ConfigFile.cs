@@ -1,10 +1,9 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using DotKube.Extensions;
 using k8s.Exceptions;
-using k8s.KubeConfigModels;
 using YamlDotNet.Serialization;
+using K8SConfiguration = DotKube.K8SClient.KubeConfigModels.K8SConfiguration;
 
 namespace DotKube.K8SClient
 {
@@ -80,7 +79,7 @@ namespace DotKube.K8SClient
             var serializer = new SerializerBuilder()
                                     .Build();
 
-            var output = serializer.Serialize(k8sConfig.ToOutputFormat());
+            var output = serializer.Serialize(k8sConfig);
             var filePath = kubeConfigPath ?? KubeConfigDefaultLocation;
 
             File.WriteAllText(filePath, output);

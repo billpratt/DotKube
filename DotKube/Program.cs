@@ -16,12 +16,12 @@ namespace DotKube
                 var input = Prompt.GetString("> ");
                 var inputSplit = input.Split(' ');
 
-                if(inputSplit[0] == "clear")
+                if (inputSplit[0] == "clear")
                 {
                     Console.Clear();
                     continue;
                 }
-                else if(inputSplit[0] == "exit")
+                else if (inputSplit[0] == "exit")
                 {
                     // Exit out
                     return 0;
@@ -42,7 +42,15 @@ namespace DotKube
             }
             catch (Exception ex)
             {
-                Reporter.Error.WriteLine(ex.Message);
+                if (ex.InnerException != null)
+                {
+                    Reporter.Output.WriteError(ex.InnerException.Message);
+                }
+                else
+                {
+                    Reporter.Output.WriteError(ex.Message);
+                }
+
                 return 1;
             }
         }

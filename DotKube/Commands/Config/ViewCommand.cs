@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using YamlDotNet.Serialization;
+using K8SConfiguration = DotKube.K8SClient.KubeConfigModels.K8SConfiguration;
 
 namespace DotKube.Commands.Config
 {
@@ -101,7 +102,7 @@ namespace DotKube.Commands.Config
             var serializer = new SerializerBuilder()
                                 .Build();
 
-            var output = serializer.Serialize(k8sConfig.ToOutputFormat());
+            var output = serializer.Serialize(k8sConfig);
 
             Reporter.Output.Write(output);
         }
@@ -112,7 +113,7 @@ namespace DotKube.Commands.Config
                                 .JsonCompatible()
                                 .Build();
 
-            var output = serializer.Serialize(k8sConfig.ToOutputFormat());
+            var output = serializer.Serialize(k8sConfig);
 
             // Prettify JSON
             output = JToken.Parse(output).ToString(Newtonsoft.Json.Formatting.Indented);

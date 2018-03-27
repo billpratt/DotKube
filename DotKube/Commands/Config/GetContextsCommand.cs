@@ -24,7 +24,13 @@ namespace DotKube.Commands.Config
         protected override int OnExecute(CommandLineApplication app)
         {
             var config = Parent.GetK8SConfiguration();
-            var contextsToShow = config.Contexts;
+            var contextsToShow = config.Contexts ?? Enumerable.Empty<Context>();
+
+            if (!contextsToShow.Any())
+            {
+                Reporter.Output.WriteLine("No contexts found");
+                return 1;
+            }
 
             if (!string.IsNullOrEmpty(ContextName))
             {

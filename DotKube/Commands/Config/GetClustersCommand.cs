@@ -1,4 +1,8 @@
-﻿using McMaster.Extensions.CommandLineUtils;
+﻿using k8s.KubeConfigModels;
+using McMaster.Extensions.CommandLineUtils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotKube.Commands.Config
 {
@@ -9,8 +13,20 @@ namespace DotKube.Commands.Config
 
         protected override int OnExecute(CommandLineApplication app)
         {
-            Reporter.Output.WriteLine("Coming soon");
+            var config = Parent.GetK8SConfiguration();
+            var clusters = config.Clusters ?? Enumerable.Empty<Cluster>();
 
+            if(!clusters.Any())
+            {
+                Reporter.Output.WriteLine("No clusters found");
+                return 1;
+            }
+
+            TableFormatter.Print(clusters, "", null, new Dictionary<string, Func<Cluster, object>>
+            {
+                { "NAME", x => x.Name }
+            });
+            
             return 0;
         }
     }

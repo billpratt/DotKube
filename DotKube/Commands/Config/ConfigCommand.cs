@@ -1,5 +1,5 @@
-﻿using k8s.KubeConfigModels;
-using McMaster.Extensions.CommandLineUtils;
+﻿using McMaster.Extensions.CommandLineUtils;
+using K8SConfiguration = DotKube.K8SClient.KubeConfigModels.K8SConfiguration;
 
 namespace DotKube.Commands.Config
 {
@@ -7,13 +7,14 @@ namespace DotKube.Commands.Config
         Subcommand("current-context", typeof(CurrentContextCommand)),
         Subcommand("delete-cluster", typeof(DeleteClusterCommand)),
         Subcommand("delete-context", typeof(DeleteContextCommand)),
+        Subcommand("delete-user", typeof(DeleteUserCommand)),
         Subcommand("get-clusters", typeof(GetClustersCommand)),
         Subcommand("get-contexts", typeof(GetContextsCommand)),
         Subcommand("rename-context", typeof(RenameContextCommand)),
         Subcommand("set", typeof(SetCommand)),
         Subcommand("set-cluster", typeof(SetClusterCommand)),
         Subcommand("set-context", typeof(SetContextCommand)),
-        Subcommand("set-credentials", typeof(SetCredentialsCommand)),
+        Subcommand("set-user", typeof(SetUserCommand)),
         Subcommand("unset", typeof(UnsetCommand)),
         Subcommand("use-context", typeof(UseContextCommand)),
         Subcommand("view", typeof(ViewCommand)),

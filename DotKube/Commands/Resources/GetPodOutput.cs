@@ -8,6 +8,7 @@ namespace DotKube.Commands.Resources
         public string Ready { get; set; }
         public string Status { get; set; }
         public int Restarts { get; set; }
+        public string Namespace { get; set; }
 
         public TimeSpan? Age { get; set; }
 

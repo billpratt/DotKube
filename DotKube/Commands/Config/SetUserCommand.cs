@@ -3,7 +3,7 @@
 namespace DotKube.Commands.Config
 {
     [Command(Description = "Sets a user entry in kubeconfig")]
-    public class SetCredentialsCommand : CommandBase
+    public class SetUserCommand : CommandBase
     {
         private ConfigCommand Parent { get; set; }
 
