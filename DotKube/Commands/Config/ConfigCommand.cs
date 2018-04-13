@@ -21,7 +21,7 @@ namespace DotKube.Commands.Config
     ]
     public class ConfigCommand : CommandBase
     {
-        [Option("--kubeconfig", Description = "Path to the kubeconfig file to use for CLI requests.", Inherited = true)]
+        [Option("--kubeconfig <FILEPATH>", Description = "Path to the kubeconfig file to use for CLI requests.", Inherited = true)]
         [LegalFilePath]
         public string KubeConfigFilePath { get; set; }
 

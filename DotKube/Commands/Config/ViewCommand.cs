@@ -15,11 +15,10 @@ namespace DotKube.Commands.Config
     {
         private ConfigCommand Parent { get; set; }
 
-        // TODO: This should be true if --minify is passed without a value
-        [Option("--minify", "Remove all information not used by current-context from the output", CommandOptionType.SingleOrNoValue)]
+        [Option("--minify", "Remove all information not used by current-context from the output", CommandOptionType.NoValue)]
         public bool Minify { get; set; }
 
-        [Option("-o|--output", "Output format. One of: json|yaml", CommandOptionType.SingleValue)]
+        [Option("-o|--output <FORMAT>", "Output format. One of: json|yaml", CommandOptionType.SingleValue)]
         public string Output { get; set; }
 
         protected override int OnExecute(CommandLineApplication app)

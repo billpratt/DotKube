@@ -11,7 +11,7 @@ namespace DotKube.Commands.Config
         private ConfigCommand Parent { get; set; }
 
         [Required]
-        [Argument(0, "context_name", Description = "Context name to use")]
+        [Argument(0, "name", Description = "Context name to use")]
         public string ContextName { get; set; }
 
         protected override int OnExecute(CommandLineApplication app)

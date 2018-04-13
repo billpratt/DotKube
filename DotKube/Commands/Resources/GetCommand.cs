@@ -8,12 +8,12 @@ namespace DotKube.Commands.Resources
     ]
     public class GetCommand : CommandBase
     {
-        [Option("--kubeconfig", Description = "Path to the kubeconfig file to use for CLI requests.", Inherited = true)]
+        [Option("--kubeconfig <FILEPATH>", Description = "Path to the kubeconfig file to use for CLI requests.", Inherited = true)]
         [LegalFilePath]
         public string KubeConfigFilePath { get; set; }
 
         [Option("--all-namespaces",
-                 CommandOptionType.SingleOrNoValue,
+                 CommandOptionType.NoValue,
                 Description = "If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with--namespace.",
                 Inherited = true)]
         public bool AllNamespaces { get; set; }
